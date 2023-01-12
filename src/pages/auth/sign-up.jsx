@@ -9,8 +9,39 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import {useState}  from 'react'
+import axios from "axios";
+import { bgcolor } from "@mui/system";
+import { withTheme } from "styled-components";
 
 export function SignUp() {
+  const [fname,setFname]=useState("");
+  const [lname,setLname]=useState("");
+  const [email,setEmail]=useState("");
+  const [pwd,setPwd]=useState("");
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    console.log(fname,lname,email,pwd)
+    const login = {
+      firstName:fname,
+      lastName:lname,
+      email: email,
+      password: pwd
+    }
+    axios.post("http://localhost:4000/api/admin/signup", login)
+.then(response => {
+  alert("user created")
+  console.log(response)
+  window.location.href = '/admin/sign-in'
+
+
+})
+.catch(err => 
+  alert("Enter all details")
+
+);
+  }
   return (
     <>
       <img
@@ -30,15 +61,16 @@ export function SignUp() {
             </Typography>
           </CardHeader>
           <CardBody className="flex flex-col gap-4">
-            <Input label="Name" size="lg" />
-            <Input type="email" label="Email" size="lg" />
-            <Input type="password" label="Password" size="lg" />
-            <div className="-ml-2.5">
-              <Checkbox label="I agree the Terms and Conditions" />
-            </div>
+            <Input  label="First Name*" size="lg" value={fname}  onChange={(e)=>setFname(e.target.value)}   />
+            <Input label="Last Name*" size="lg" value={lname}  onChange={(e)=>setLname(e.target.value)}  />
+
+            <Input type="email" label="Email*" size="lg" value={email}  onChange={(e)=>setEmail(e.target.value)}/>
+            <Input type="password" label="Password" size="lg" value={pwd} 
+            onChange={(e)=>setPwd(e.target.value)} />
+           
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
+            <Button variant="gradient" fullWidth onClick={handleSubmit}>
               Sign Up
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">

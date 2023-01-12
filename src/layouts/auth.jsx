@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-
 import {  Footer } from "@/widgets/layout";
-import routes from "@/routes";
+import tab from "@/tab";
 
 export function Auth() {
 
@@ -9,7 +8,7 @@ export function Auth() {
     <div className="relative min-h-screen w-full">
       
       <Routes>
-        {routes.map(
+        {tab.map(
           ({ layout, pages }) =>
             layout === "auth" &&
             pages.map(({ path, element }) => (

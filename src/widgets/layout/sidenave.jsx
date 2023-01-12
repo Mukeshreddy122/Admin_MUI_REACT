@@ -8,8 +8,12 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useMaterialTailwindController, setOpenSidenav } from "@/context";
-
-export function Sidenav({ brandImg, brandName, routes }) {
+import { List } from "@mui/material";
+import React, { useState } from "react";
+import DashboardIcon from '@rsuite/icons/legacy/Dashboard';
+import { Sidenav, Nav } from 'rsuite';
+import './sty.css';
+export function Sidenave({ routes,tab}) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
   const sidenavTypes = {
@@ -29,9 +33,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
           sidenavType === "dark" ? "border-white/20" : "border-blue-gray-50"
         }`}
       >
-        <Link to="/" className="flex items-center gap-4 py-6 px-8">
+        <Link to="/dashboard/home" className="flex items-center gap-4 py-6 px-8">
           <Avatar src="/img/Pv.png" className="w-full" />
-          
         </Link>
         <IconButton
           variant="text"
@@ -45,10 +48,10 @@ export function Sidenav({ brandImg, brandName, routes }) {
         </IconButton>
       </div>
       <div className="m-4">
-        {routes.map(({ layout, title, pages}, key) => (
+        {routes.map(({ layout, title, pages }, key) => (
           <ul key={key} className="mb-4 flex flex-col gap-1">
             {title && (
-              <li className="mx-3.5 mt-4 mb-2">
+              <li className=" mt-4 mb-2">
                 <Typography
                   variant="small"
                   color={sidenavType === "dark" ? "white" : "blue-gray"}
@@ -58,7 +61,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 </Typography>
               </li>
             )}
-            {pages.map(({ icon, name, path,subnav }) => (
+            {pages.map(({ icon, name, path, subnav }) => (
               <li key={name}>
                 <NavLink to={`/${layout}${path}`}>
                   {({ isActive }) => (
@@ -83,28 +86,62 @@ export function Sidenav({ brandImg, brandName, routes }) {
                       </Typography>
                     </Button>
                   )}
-            
-
                 </NavLink>
-               
               </li>
             ))}
           </ul>
         ))}
       </div>
-      
+      <div className="m-4">
+      <Sidenav appearance="#2b383f"  >
+      <Sidenav.Body >
+    
+        {tab.map(({ layout,item, title, pages,icon }, key) => (
+          <Nav  key={key} > 
+                       
+               <Nav.Menu  style={{color:"white"}}   title={title} icon={icon}>
+
+            {pages.map(({icon,  name, path, subnav }) => (
+              <li key={name}>
+                <NavLink to={`/${layout}${path}`}>
+                  {({ isActive }) => (
+                    <Button
+                      variant={isActive ? "gradient" : "text"}
+                      color={
+                        isActive
+                          ? sidenavColor
+                          : sidenavType === "dark"
+                          ? "white"
+                          : "blue-gray"
+                      }
+                      className="flex items-center gap-4 px-4 capitalize"
+                      fullWidth
+                    >
+                      <Typography color="inherit"  className="font-medium capitalize" >{name}</Typography>
+                   
+                    </Button>
+                  )}
+                </NavLink>
+              </li>
+            ))}
+            </Nav.Menu>
+          </Nav>
+        ))}
+        
+ </Sidenav.Body>
+    </Sidenav>
+
+      </div>
     </aside>
   );
 }
 
-
-
-Sidenav.propTypes = {
+Sidenave.propTypes = {
   brandImg: PropTypes.string,
   brandName: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-Sidenav.displayName = "/src/widgets/layout/sidnave.jsx";
+Sidenav.displayName = "/src/widgets/layout/sidenave.jsx";
 
 export default Sidenav;

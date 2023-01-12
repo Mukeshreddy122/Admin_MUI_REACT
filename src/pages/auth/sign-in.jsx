@@ -9,8 +9,46 @@ import {
   Button,
   Typography,
 } from "@material-tailwind/react";
+import {useState}  from 'react'
+import axios from "axios";
+import { setAuthToken } from "./setAuthToken";
 
 export function SignIn() {
+  const [email,setEmail]=useState("");
+  const [pwd,setPwd]=useState("");
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    console.log(email,pwd)
+    const login = {
+      email: email,
+      password: pwd
+    }
+
+axios.post("http://localhost:4000/api/admin/signin", login)
+.then(response => {
+  //get token from response
+  const token  =  response.data.token;
+  console.log(token)
+  const uemail=response.data.user.email;
+  const fname= response.data.user.fullName;
+  localStorage.setItem("fname", fname);
+
+  localStorage.setItem("uemail", uemail);
+  //set JWT token to local
+  localStorage.setItem("token", token);
+  //set token to axios common header
+  setAuthToken(token);
+//redirect user to home page
+  window.location.href = '/dashboard/home'
+
+})
+.catch(err => alert("Enter Correct Details")
+
+);
+}
+
+
   return (
     <>
       <img
@@ -19,6 +57,7 @@ export function SignIn() {
       />
       <div className="absolute inset-0 z-0 h-full w-full bg-black/50" />
       <div className="container mx-auto p-4">
+        
         <Card className="absolute top-2/4 left-2/4 w-full max-w-[24rem] -translate-y-2/4 -translate-x-2/4">
           <CardHeader
             variant="gradient"
@@ -29,15 +68,16 @@ export function SignIn() {
               Sign In
             </Typography>
           </CardHeader>
+        
           <CardBody className="flex flex-col gap-4">
-            <Input type="email" label="Email" size="lg" />
-            <Input type="password" label="Password" size="lg" />
-            <div className="-ml-2.5">
-              <Checkbox label="Remember Me" />
-            </div>
+            <Input type="email" label="Email" size="lg" value={email} 
+            onChange={(e)=>setEmail(e.target.value)} />
+            <Input type="password" label="Password" size="lg" value={pwd} 
+            onChange={(e)=>setPwd(e.target.value)} />
+            
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" fullWidth>
+            <Button variant="gradient" fullWidth onClick={handleSubmit}>
               Sign In
             </Button>
             <Typography variant="small" className="mt-6 flex justify-center">

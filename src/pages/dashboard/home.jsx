@@ -1,41 +1,25 @@
 import React from "react";
 import {
   Typography,
-  Card,
-  CardHeader,
-  CardBody,
-  IconButton,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-  Tooltip,
-  Progress,
+ 
 } from "@material-tailwind/react";
 import {
-  ClockIcon,
-  CheckIcon,
-  EllipsisVerticalIcon,
-  ArrowUpIcon,
+  
 } from "@heroicons/react/24/outline";
 import { StatisticsCard } from "@/widgets/cards";
-import { StatisticsChart } from "@/widgets/charts";
 import {
   statisticsCardsData,
-  statisticsChartsData,
-  projectsTableData,
-  ordersOverviewData,
+  
 } from "@/data";
-import { useMemo } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+// import { useMemo } from "react";
+// import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 export function Home() {
   
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDdBrKWRFgNwFaW1fzFkM0D4IIdjRAModk",
-  });
-  if (!isLoaded) return <div>Loading...</div>;
+  // const { isLoaded } = useLoadScript({
+  //   googleMapsApiKey: "AIzaSyDdBrKWRFgNwFaW1fzFkM0D4IIdjRAModk",
+  // });
+  // if (!isLoaded) return <div>Loading...</div>;
   return (
     <div className="mt-12">
       <div className="mb-12 grid  gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-3">
@@ -56,9 +40,9 @@ export function Home() {
           />
         ))}
       </div>
-        <div>
+        {/* <div>
         <Map />
-        </div>
+        </div> */}
       
     </div>
   );

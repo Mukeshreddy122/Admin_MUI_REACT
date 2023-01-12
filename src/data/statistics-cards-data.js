@@ -1,10 +1,4 @@
-import {
-  BanknotesIcon,
-  UserPlusIcon,
-  UserIcon,
-  ChartBarIcon,
-  
-} from "@heroicons/react/24/solid";
+
 import SchoolIcon from '@mui/icons-material/School';
 export const statisticsCardsData = [
   {
